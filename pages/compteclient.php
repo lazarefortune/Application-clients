@@ -5,7 +5,7 @@ if (isset($_GET['id_client'])) {
 
     $db = new PDO('mysql:host=localhost;dbname=business', 'root', '');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING); // On émet une alerte à chaque fois qu'une requête a échoué.
-    
+
 
     if(isset($_POST['newclient'])){
       $client1 = new \App\Table\Client;
@@ -29,17 +29,17 @@ if (isset($_GET['id_client'])) {
       $_POST['id_client'] = $client->getid();
       $emprunt = new \App\Table\Emprunt;
       $emprunt::hydrater($_POST,$emprunt);
-      
+
       $manager = new \App\Table\ClientManager($db);
       $manager -> addEmprunt($emprunt);
 
       header("Location: index.php?p=compteclient&id_client=".$client->getid());
     }
 ?>
-<?php 
+<?php
 
 ?>
-  <a href="index.php?p=admin" class="btn btn-primary btn-sm">
+  <a href="index.php?p=listeclients" class="btn btn-primary btn-sm">
     retour
   </a>
   <div class="row">
@@ -48,13 +48,13 @@ if (isset($_GET['id_client'])) {
       <h4>Liste des emprunts de <b><?= $client->getnom() ?></b> </h4>
 
       <div class="row shadow bg-white rounded">
-           
-              
-              
-            
-            
-              
-             
+
+
+
+
+
+
+
 
               <table class="table">
                 <thead class="thead-dark">
@@ -81,7 +81,7 @@ if (isset($_GET['id_client'])) {
                 </tbody>
               </table>
 
-              
+
 
 
       </div>
@@ -95,7 +95,7 @@ if (isset($_GET['id_client'])) {
 
           <form method="POST">
           <div class="row">
-            
+
             <div class="col-md-6 mb-3">
               <label for="montant">Montant de l'emprunt</label>
               <input type="text" class="form-control" id="montant" placeholder=""  onblur="calcul()" name="montant">
@@ -128,7 +128,7 @@ if (isset($_GET['id_client'])) {
             <div class="col-md-6 mb-3">
               <label for="total">montant dû</label>
               <input type="text" class="form-control" id="total" placeholder="" disabled>
-              
+
             </div>
 
             <div class="col-md-6 mb-3">
@@ -137,8 +137,8 @@ if (isset($_GET['id_client'])) {
               <div class="invalid-feedback">
                 Choisissez une date
               </div>
-            </div>   
-          
+            </div>
+
           </div>
 
           <button class="btn btn-primary btn-block" type="submit" name="addpret">
@@ -157,14 +157,14 @@ if (isset($_GET['id_client'])) {
               var total = Number((montant + (montant * taux)/100));
               document.getElementById("total").value = total;
           }
-           
+
           </script>
 
         <hr class="mb-4">
-      
+
     </div>
     <div class="col-md-8 order-md-1">
-      
+
       <h4 class="mb-3"><b>Compte du Client</b></h4>
       <form class="needs-validation" method="POST" novalidate>
         <div class="row">
@@ -206,7 +206,7 @@ if (isset($_GET['id_client'])) {
             </div>
             <input type="text" class="form-control" id="Contact2" placeholder="Contact2" value="<?= $client->getcontact_2() ?>" name="contact_2">
           </div>
-          
+
 
         </div>
 
@@ -230,14 +230,14 @@ if (isset($_GET['id_client'])) {
         <div class="col-md-6 mb-3">
           <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Statut du client</label>
           <?php $test = $client->getstatut_client();
-          if ($test == 'Bon payeur'): ?>  
+          if ($test == 'Bon payeur'): ?>
             <h5><span class="badge badge-success"><?= $client->getstatut_client() ?></span></h5>
           <?php else: ?>
             <h5><span class="badge badge-danger"><?= $client->getstatut_client() ?></span></h5>
           <?php endif; ?>
 
           <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="statut_client">
-            <optgroup label="Choisir..." value="<?= $client->getstatut_client() ?>"> 
+            <optgroup label="Choisir..." value="<?= $client->getstatut_client() ?>">
               <option name="Bon payeur">Bon payeur</option>
               <option name="Mauvais payeur">Mauvais payeur</option>
               <option name="Intretable">Intrétable</option>
@@ -254,7 +254,7 @@ if (isset($_GET['id_client'])) {
         </button>
         <div class="collapse" id="collapseExample">
           <div class="row" >
-            
+
             <div class="col-md-6 mb-3">
               <label for="banque">Banque</label>
               <span ><?= $client->getbanque() ?></span>
@@ -286,25 +286,25 @@ if (isset($_GET['id_client'])) {
                 Cart code required
               </div>
             </div>
-            
+
           </div>
         </div>
 
         <hr class="mb-4">
 
-        
 
-                
+
+
 
 
         <hr class="mb-4">
-        
+
         <button class="btn btn-primary btn-lg btn-block" type="submit" name="newclient">Mettre à jour le compte du client</button>
       </form>
         <hr class="mb-4">
-        
+
     </div>
   </div>
 
-  
+
 <a class="text-center" href="recuperation.php">Mot de passe oublié ?</a>
